@@ -23,3 +23,12 @@ def content(update, context):
 
 updater =telegram.ext.update(TOKEN, use_context=True)
 disp = updater.dispatcher
+
+disp.add_handler(telegram.ext.CommandHandler("start", start))
+disp.add_handler(telegram.ext.CommandHandler("help", help))
+disp.add_handler(telegram.ext.CommandHandler("content", content))
+disp.add_handler(telegram.ext.CommandHandler("contact", contact))
+
+updater.start_polling()
+updater.idle()
+
