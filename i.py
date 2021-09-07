@@ -21,6 +21,9 @@ def content(update, context):
 def content(update, context):
     update.message.reply_text(" You can contact Florian on the Discord server. ")
 
+def handle_message(update, context):
+    update.message.reply_text(f"you said {update.message.text}")
+
 updater =telegram.ext.update(TOKEN, use_context=True)
 disp = updater.dispatcher
 
@@ -28,7 +31,9 @@ disp.add_handler(telegram.ext.CommandHandler("start", start))
 disp.add_handler(telegram.ext.CommandHandler("help", help))
 disp.add_handler(telegram.ext.CommandHandler("content", content))
 disp.add_handler(telegram.ext.CommandHandler("contact", contact))
+disp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
 
 updater.start_polling()
 updater.idle()
+
 
