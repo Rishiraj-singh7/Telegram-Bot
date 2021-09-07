@@ -1,4 +1,7 @@
 import telegram.ext
+import pandas_datareader as web
+
+
 with open('token.txt' , 'r') as f:
      TOKEN = f.read()
 
@@ -21,6 +24,12 @@ def content(update, context):
 def content(update, context):
     update.message.reply_text(" You can contact Florian on the Discord server. ")
 
+def stock(update, context):
+    ticker = context.args[0]
+    date = web.DataReader(ticker, 'yahoo')
+    price = data.iloc[-1]['Close']
+    update.message.reply_text("The current price OF {ticker} is {price:.2f}$!")
+
 def handle_message(update, context):
     update.message.reply_text(f"you said {update.message.text}")
 
@@ -31,6 +40,7 @@ disp.add_handler(telegram.ext.CommandHandler("start", start))
 disp.add_handler(telegram.ext.CommandHandler("help", help))
 disp.add_handler(telegram.ext.CommandHandler("content", content))
 disp.add_handler(telegram.ext.CommandHandler("contact", contact))
+disp.add_handler(telegram.ext.CommandHandler("stocK", stock))
 disp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
 
 updater.start_polling()
